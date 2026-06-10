@@ -1,0 +1,885 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>NOIR ÉCLAT — 黒をまとう、強さを纏う。</title>
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,400&family=Noto+Serif+JP:wght@200;300;400;500;600;700&display=swap" rel="stylesheet" />
+<style>
+  :root {
+    --cream: #efe9dd;
+    --cream-deep: #e7dfd0;
+    --ivory: #f6f2ea;
+    --ink: #1d1a16;
+    --ink-soft: #423c33;
+    --gold: #a8895f;
+    --gold-light: #c2a46a;
+    --gold-deep: #8a6f48;
+    --black: #0b0c0d;
+    --noir-2: #14151a;
+    --line: rgba(168, 137, 95, 0.32);
+    --serif-jp: "Noto Serif JP", serif;
+    --serif-lt: "Cormorant Garamond", serif;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  html {
+    scroll-behavior: smooth;
+    scroll-padding-top: 72px;
+    scroll-snap-type: y proximity;
+  }
+  body.lock { overflow: hidden; }
+
+  body {
+    font-family: var(--serif-jp);
+    background: var(--black);
+    color: var(--ink);
+    line-height: 1.9;
+    -webkit-font-smoothing: antialiased;
+    overflow-x: hidden;
+  }
+
+  ::selection { background: var(--gold); color: var(--ivory); }
+
+  .wrap { width: min(1180px, 90vw); margin-inline: auto; }
+
+  /* ============ NAV ============ */
+  header.nav {
+    position: fixed;
+    top: 0; left: 0; right: 0;
+    z-index: 100;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 22px clamp(20px, 5vw, 64px);
+    transition: background .5s ease, padding .5s ease, box-shadow .5s ease;
+  }
+  header.nav.scrolled {
+    background: rgba(11, 12, 13, 0.86);
+    backdrop-filter: blur(12px);
+    padding-block: 14px;
+    box-shadow: 0 1px 0 var(--line);
+  }
+  .brand {
+    font-family: var(--serif-lt);
+    font-size: clamp(20px, 2.4vw, 28px);
+    letter-spacing: .34em;
+    color: var(--gold-light);
+    font-weight: 500;
+    text-indent: .34em;
+  }
+  nav.menu { display: flex; gap: clamp(18px, 2.6vw, 40px); align-items: center; }
+  nav.menu a {
+    text-decoration: none;
+    color: rgba(239, 233, 221, 0.72);
+    font-size: 13px;
+    letter-spacing: .18em;
+    position: relative;
+    padding-bottom: 4px;
+  }
+  nav.menu a::after {
+    content: ""; position: absolute; left: 0; bottom: 0;
+    width: 0; height: 1px; background: var(--gold);
+    transition: width .4s ease;
+  }
+  nav.menu a:hover::after { width: 100%; }
+  .nav-cta {
+    border: 1px solid var(--gold);
+    padding: 9px 22px;
+    color: var(--gold-light) !important;
+    border-radius: 2px;
+  }
+  .nav-cta::after { display: none; }
+  .nav-cta:hover { background: var(--gold); color: var(--ivory) !important; }
+  .menu-toggle { display: none; }
+
+  /* ============ HERO ============ */
+  .hero {
+    position: relative;
+    min-height: 100vh;
+    display: grid;
+    grid-template-columns: 1.05fr 1fr;
+    background: linear-gradient(120deg, var(--black) 0%, var(--black) 52%, var(--noir-2) 52%, var(--noir-2) 100%);
+    overflow: hidden;
+  }
+  .hero-text {
+    align-self: center;
+    padding: 140px clamp(24px, 6vw, 96px) 80px;
+    z-index: 3;
+  }
+  .hero-logo {
+    font-family: var(--serif-lt);
+    font-size: clamp(40px, 6vw, 72px);
+    letter-spacing: .18em;
+    color: var(--gold-light);
+    font-weight: 500;
+    line-height: 1;
+    text-indent: .18em;
+  }
+  .hero-sub-en {
+    font-family: var(--serif-lt);
+    letter-spacing: .42em;
+    font-size: clamp(11px, 1.3vw, 14px);
+    color: var(--gold);
+    margin-top: 14px;
+    text-indent: .42em;
+    text-transform: uppercase;
+  }
+  .hero-head {
+    font-size: clamp(52px, 8.5vw, 104px);
+    font-weight: 500;
+    line-height: 1.12;
+    letter-spacing: .02em;
+    margin-top: clamp(36px, 6vw, 64px);
+    color: var(--ivory);
+  }
+  .hero-head .accent { color: var(--gold-light); }
+  .hero-tag {
+    font-size: clamp(18px, 2.3vw, 27px);
+    font-weight: 500;
+    color: var(--gold-light);
+    margin-top: clamp(28px, 4vw, 48px);
+    letter-spacing: .04em;
+    line-height: 1.6;
+  }
+  .hero-rule {
+    width: 64px; height: 1px; background: var(--gold);
+    margin: 26px 0 24px;
+  }
+  .hero-body {
+    font-size: 15px;
+    font-weight: 300;
+    color: rgba(239, 233, 221, 0.74);
+    letter-spacing: .04em;
+    max-width: 30em;
+  }
+  .hero-actions { margin-top: 40px; display: flex; gap: 18px; flex-wrap: wrap; }
+
+  .btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    font-family: var(--serif-jp);
+    font-size: 14px;
+    letter-spacing: .14em;
+    padding: 15px 34px;
+    border-radius: 2px;
+    text-decoration: none;
+    cursor: pointer;
+    transition: all .4s ease;
+    border: 1px solid var(--gold);
+  }
+  .btn-primary { background: var(--ink); color: var(--ivory); border-color: var(--ink); }
+  .btn-primary:hover { background: var(--gold-deep); border-color: var(--gold-deep); }
+  .btn-ghost { background: transparent; color: var(--gold-deep); }
+  .btn-ghost:hover { background: var(--gold); color: var(--ivory); }
+
+  /* hero portrait */
+  .hero-visual {
+    position: relative;
+    overflow: hidden;
+    background: var(--black);
+  }
+  .hero-model {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: 60% 28%;
+  }
+  /* soft vignette so type/products read against photo */
+  .hero-visual::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background:
+      linear-gradient(90deg, var(--black) 0%, rgba(11,12,13,0) 30%),
+      linear-gradient(0deg, var(--black) 0%, transparent 28%),
+      linear-gradient(180deg, rgba(11,12,13,.5) 0%, transparent 22%);
+    pointer-events: none;
+  }
+  .hero-scroll {
+    position: absolute;
+    bottom: 30px; left: 50%; transform: translateX(-50%);
+    z-index: 5;
+    font-family: var(--serif-lt);
+    letter-spacing: .3em;
+    font-size: 11px;
+    color: var(--gold-light);
+    text-transform: uppercase;
+    display: flex; flex-direction: column; align-items: center; gap: 10px;
+  }
+  .hero-scroll span.line { width: 1px; height: 46px; background: var(--gold); animation: scrolldot 2.4s ease-in-out infinite; transform-origin: top; }
+  @keyframes scrolldot { 0%,100% { transform: scaleY(.4); opacity:.4 } 50% { transform: scaleY(1); opacity:1 } }
+
+  /* product band overlapping hero bottom-left */
+  .hero-products {
+    position: absolute;
+    left: clamp(20px, 4vw, 64px);
+    bottom: 5%;
+    display: flex;
+    align-items: flex-end;
+    gap: 2px;
+    z-index: 4;
+  }
+  .hero-thumb {
+    width: clamp(74px, 9vw, 116px);
+    aspect-ratio: 1 / 1;
+    border-radius: 6px;
+    overflow: hidden;
+    box-shadow: 0 18px 30px -14px rgba(40,30,14,.5);
+    transition: transform .4s ease;
+  }
+  .hero-thumb:hover { transform: translateY(-6px); }
+  .hero-thumb img { width: 100%; height: 100%; object-fit: cover; display: block; }
+
+  /* ============ SECTION SHELL ============ */
+  section { padding-block: clamp(80px, 12vw, 150px); scroll-snap-align: start; scroll-margin-top: 64px; }
+  .eyebrow {
+    font-family: var(--serif-lt);
+    letter-spacing: .42em;
+    text-transform: uppercase;
+    font-size: 12px;
+    color: var(--gold);
+    text-indent: .42em;
+  }
+  .sec-title {
+    font-size: clamp(30px, 5vw, 52px);
+    font-weight: 500;
+    line-height: 1.35;
+    margin-top: 18px;
+    letter-spacing: .03em;
+  }
+  .sec-title .accent { color: var(--gold-deep); }
+
+  .reveal { opacity: 0; transform: translateY(34px); filter: blur(6px); transition: opacity 1s ease, transform 1s ease, filter 1s ease; }
+  .reveal.in { opacity: 1; transform: none; filter: none; }
+
+  /* ============ PHILOSOPHY ============ */
+  .philosophy { background: var(--ivory); position: relative; }
+  .philosophy .grid {
+    display: grid; grid-template-columns: 1fr 1fr; gap: clamp(40px, 7vw, 110px); align-items: center;
+  }
+  .phil-copy p {
+    font-weight: 300; font-size: 16px; color: var(--ink-soft); margin-top: 26px; letter-spacing: .03em;
+  }
+  .phil-mark {
+    font-family: var(--serif-lt);
+    font-size: clamp(80px, 18vw, 200px);
+    color: var(--gold);
+    opacity: .16;
+    line-height: .8;
+    text-align: right;
+    user-select: none;
+  }
+  .phil-quote {
+    font-size: clamp(22px, 3.4vw, 38px);
+    font-weight: 400;
+    line-height: 1.75;
+    letter-spacing: .04em;
+    color: var(--ink);
+  }
+  .phil-quote .accent { color: var(--gold-deep); }
+
+  /* ============ COLLECTION ============ */
+  .collection { background: var(--black); }
+  .collection .sec-title { color: var(--ivory); }
+  .collection .sec-title .accent { color: var(--gold-light); }
+  .collection .head { text-align: center; margin-bottom: clamp(50px, 7vw, 84px); }
+  .products {
+    display: grid; grid-template-columns: repeat(4, 1fr); gap: clamp(16px, 2vw, 28px);
+  }
+  .card {
+    background: var(--ivory);
+    border: 1px solid var(--line);
+    padding: 44px 32px 38px;
+    text-align: center;
+    transition: transform .5s ease, box-shadow .5s ease;
+    position: relative;
+    overflow: hidden;
+  }
+  .card:hover { transform: translateY(-8px); box-shadow: 0 30px 50px -28px rgba(60,46,24,.4); }
+  .card::after {
+    content: ""; position: absolute; left: 0; bottom: 0; height: 2px; width: 0; background: var(--gold);
+    transition: width .5s ease;
+  }
+  .card:hover::after { width: 100%; }
+  .pic {
+    height: 220px;
+    display: grid; place-items: center;
+    margin-bottom: 28px;
+    overflow: hidden;
+    border-radius: 4px;
+  }
+  .pic img {
+    width: 100%; height: 100%; object-fit: cover; display: block;
+    transition: transform .7s ease;
+  }
+  .card:hover .pic img { transform: scale(1.05); }
+  .card .name-en { font-family: var(--serif-lt); letter-spacing: .26em; font-size: 13px; color: var(--gold); text-transform: uppercase; }
+  .card .name-jp { font-size: 22px; font-weight: 500; margin-top: 10px; }
+  .card .desc { font-size: 14px; font-weight: 300; color: var(--ink-soft); margin-top: 16px; }
+  .card .price { font-family: var(--serif-lt); font-size: 22px; color: var(--gold-deep); margin-top: 20px; letter-spacing: .05em; }
+
+  /* ============ RITUAL / STEPS ============ */
+  .ritual { background: var(--black); color: var(--cream); }
+  .ritual .eyebrow { color: var(--gold-light); }
+  .ritual .sec-title { color: var(--ivory); }
+  .ritual .sec-title .accent { color: var(--gold-light); }
+  .ritual .head { text-align:center; margin-bottom: clamp(50px,7vw,80px); }
+  .steps { display: grid; grid-template-columns: repeat(3,1fr); gap: clamp(24px,4vw,56px); }
+  .step { position: relative; padding-top: 30px; }
+  .step .no {
+    font-family: var(--serif-lt); font-size: 60px; color: var(--gold);
+    line-height: 1; opacity: .55;
+  }
+  .step h4 { font-size: 21px; font-weight: 500; margin: 14px 0 12px; letter-spacing:.05em; color: var(--ivory); }
+  .step p { font-size: 14px; font-weight: 300; color: rgba(239,233,221,.7); }
+  .step::before {
+    content:""; position:absolute; top:0; left:0; width:46px; height:1px; background:var(--gold);
+  }
+
+  /* ============ VOICE / QUOTE STRIP ============ */
+  .voice { background: var(--black); text-align:center; }
+  .voice blockquote {
+    font-size: clamp(26px, 4.4vw, 50px);
+    font-weight: 400; line-height: 1.6; letter-spacing:.05em;
+    max-width: 22em; margin-inline:auto; color: var(--ivory);
+  }
+  .voice blockquote .accent { color: var(--gold-light); }
+  .voice cite {
+    display:block; margin-top: 34px; font-style: normal;
+    font-family: var(--serif-lt); letter-spacing:.28em; font-size:13px; color: var(--gold); text-transform: uppercase;
+  }
+
+  /* ============ CTA ============ */
+  .cta {
+    background: linear-gradient(135deg, #0b0c0d 0%, #121319 60%, #1b1c22 100%);
+    color: var(--cream); text-align:center; position: relative; overflow:hidden;
+  }
+  .cta::before {
+    content:""; position:absolute; inset:0;
+    background: radial-gradient(60% 80% at 80% 110%, rgba(196,168,119,.32), transparent 60%);
+  }
+  .cta .inner { position: relative; z-index:2; }
+  .cta .eyebrow { color: var(--gold-light); }
+  .cta h2 {
+    font-size: clamp(30px, 5.5vw, 60px); font-weight: 500; line-height:1.4; margin:20px 0 18px; letter-spacing:.04em;
+  }
+  .cta h2 .accent { color: var(--gold-light); }
+  .cta p { font-weight:300; color: rgba(239,233,221,.78); max-width: 34em; margin: 0 auto 40px; }
+  .cta .btn-primary { background: var(--gold); border-color: var(--gold); color: var(--black); }
+  .cta .btn-primary:hover { background: var(--gold-light); border-color: var(--gold-light); }
+
+  /* ============ FOOTER ============ */
+  footer {
+    background: var(--black); color: rgba(239,233,221,.6); padding: 70px 0 36px;
+    border-top: 1px solid rgba(168,137,95,.25);
+  }
+  .foot-grid { display:grid; grid-template-columns: 2fr 1fr 1fr 1fr; gap: 40px; }
+  .foot-brand .brand { color: var(--gold-light); font-size: 26px; }
+  .foot-brand p { font-size:13px; font-weight:300; margin-top:18px; max-width: 26em; }
+  .foot-col h5 { font-family: var(--serif-lt); letter-spacing:.2em; font-size:12px; color: var(--gold-light); text-transform:uppercase; margin-bottom:18px; }
+  .foot-col a { display:block; color: rgba(239,233,221,.6); text-decoration:none; font-size:13px; font-weight:300; padding:6px 0; transition: color .3s; }
+  .foot-col a:hover { color: var(--gold-light); }
+  .foot-bottom {
+    margin-top: 56px; padding-top: 24px; border-top:1px solid rgba(168,137,95,.18);
+    display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:14px;
+    font-size:12px; letter-spacing:.08em;
+  }
+  .tagline-band {
+    background: linear-gradient(90deg,#0b0c0d, #16171d 50%, #0b0c0d);
+    color: var(--gold-light);
+    text-align:center; padding: 30px 0;
+    font-size: clamp(20px, 3.4vw, 34px); font-weight:400; letter-spacing:.16em;
+  }
+
+  /* ============ INTRO (opening) ============ */
+  #intro {
+    position: fixed; inset: 0; z-index: 1000;
+    background: var(--black);
+    display: grid; place-items: center;
+    transform: translateY(0);
+    transition: transform 1.05s cubic-bezier(.76,0,.24,1);
+    will-change: transform;
+  }
+  #intro::after { /* thin gold seam revealed as curtain lifts */
+    content: ""; position: absolute; left: 0; right: 0; bottom: -2px; height: 2px;
+    background: linear-gradient(90deg, transparent, var(--gold), transparent);
+    opacity: .8;
+  }
+  #intro.exit { transform: translateY(-100%); }
+  #intro .intro-inner { text-align: center; transition: opacity .4s ease; }
+  #intro.exit .intro-inner { opacity: 0; }
+  #intro .intro-logo {
+    font-family: var(--serif-lt);
+    font-size: clamp(40px, 8vw, 86px);
+    letter-spacing: .22em; text-indent: .22em;
+    color: var(--gold-light); font-weight: 500; line-height: 1;
+    opacity: 0; transform: translateY(16px);
+    animation: introUp 1.2s .2s cubic-bezier(.2,.7,.2,1) forwards;
+  }
+  #intro .intro-line {
+    height: 1px; width: 0; background: var(--gold); margin: 24px auto 0;
+    animation: introLine 1s 1s ease forwards;
+  }
+  #intro .intro-sub {
+    font-family: var(--serif-lt); text-transform: uppercase;
+    letter-spacing: .42em; text-indent: .42em;
+    font-size: clamp(10px, 1.4vw, 13px); color: var(--gold);
+    margin-top: 20px; opacity: 0;
+    animation: introUp 1s 1.25s ease forwards;
+  }
+  @keyframes introUp { to { opacity: 1; transform: none; } }
+  @keyframes introLine { to { width: 170px; } }
+
+  /* ============ HERO ENTRANCE (after intro) ============ */
+  .hero-text > * { opacity: 0; transform: translateY(26px); transition: opacity .9s ease, transform .9s ease; }
+  .hero-model { transform: scale(1.08); opacity: 0; transition: transform 1.6s ease, opacity 1.2s ease; }
+  body.ready .hero-text > * { opacity: 1; transform: none; }
+  body.ready .hero-model { transform: scale(1); opacity: 1; }
+  body.ready .hero-text > *:nth-child(1) { transition-delay: .05s; }
+  body.ready .hero-text > *:nth-child(2) { transition-delay: .15s; }
+  body.ready .hero-text > *:nth-child(3) { transition-delay: .28s; }
+  body.ready .hero-text > *:nth-child(4) { transition-delay: .42s; }
+  body.ready .hero-text > *:nth-child(5) { transition-delay: .52s; }
+  body.ready .hero-text > *:nth-child(6) { transition-delay: .62s; }
+  body.ready .hero-text > *:nth-child(7) { transition-delay: .74s; }
+
+  /* ============ CARD affordance ============ */
+  .card { cursor: pointer; }
+  .card .more {
+    display: inline-block; margin-top: 18px;
+    font-family: var(--serif-lt); letter-spacing: .26em; text-transform: uppercase;
+    font-size: 11px; color: var(--gold-deep);
+    border-bottom: 1px solid var(--line); padding-bottom: 3px;
+    transition: color .3s ease, border-color .3s ease;
+  }
+  .card:hover .more { color: var(--gold); border-color: var(--gold); }
+
+  /* ============ PRODUCT MODAL (multi-page morph) ============ */
+  .pmodal { position: fixed; inset: 0; z-index: 900; display: flex; visibility: hidden; opacity: 0; transition: opacity .45s ease, visibility .45s; }
+  .pmodal.open { visibility: visible; opacity: 1; }
+  .pmodal-backdrop { position: absolute; inset: 0; background: rgba(22,19,16,.55); backdrop-filter: blur(5px); }
+  .pmodal-panel {
+    position: relative; margin: auto; width: min(960px, 92vw); max-height: 90vh; overflow: auto;
+    background: var(--ivory); display: grid; grid-template-columns: 1fr 1fr;
+    border: 1px solid var(--line); box-shadow: 0 50px 100px -34px rgba(0,0,0,.55);
+    transform: translateY(26px); transition: transform .55s cubic-bezier(.2,.7,.2,1);
+  }
+  .pmodal.open .pmodal-panel { transform: none; }
+  .pmodal-figure { background: var(--cream-deep); min-height: 420px; }
+  .pmodal-figure img { width: 100%; height: 100%; object-fit: cover; display: block; }
+  .pmodal-body { padding: clamp(30px, 4vw, 56px); display: flex; flex-direction: column; justify-content: center; }
+  .pmodal-body .name-en { font-family: var(--serif-lt); letter-spacing: .26em; text-transform: uppercase; font-size: 13px; color: var(--gold); }
+  .pmodal-body .name-jp { font-size: clamp(24px, 3vw, 32px); font-weight: 500; margin-top: 10px; letter-spacing: .04em; }
+  .pmodal-body .rule { width: 48px; height: 1px; background: var(--gold); margin: 22px 0; }
+  .pmodal-body .desc { font-size: 15px; font-weight: 300; color: var(--ink-soft); letter-spacing: .03em; }
+  .pmodal-body .price { font-family: var(--serif-lt); font-size: 26px; color: var(--gold-deep); margin: 26px 0 28px; letter-spacing: .05em; }
+  .pmodal-close {
+    position: absolute; top: 14px; right: 16px; z-index: 2;
+    background: rgba(246,242,234,.85); border: 1px solid var(--line); border-radius: 50%;
+    width: 40px; height: 40px; cursor: pointer; color: var(--ink-soft); font-size: 20px; line-height: 1;
+    transition: background .3s ease, color .3s ease;
+  }
+  .pmodal-close:hover { background: var(--gold); color: var(--ivory); }
+
+  @media (max-width: 720px) {
+    .pmodal-panel { grid-template-columns: 1fr; }
+    .pmodal-figure { min-height: 240px; max-height: 38vh; }
+  }
+
+  /* ============ REDUCED MOTION ============ */
+  @media (prefers-reduced-motion: reduce) {
+    * { animation-duration: .001ms !important; transition-duration: .001ms !important; }
+    html { scroll-snap-type: none; scroll-behavior: auto; }
+    #intro { display: none !important; }
+    .reveal { filter: none; }
+  }
+
+  /* ============ RESPONSIVE ============ */
+  @media (max-width: 900px) {
+    .hero { grid-template-columns: 1fr; background: var(--black); }
+    .hero-visual { min-height: 56vh; order: -1; }
+    .hero-text { padding-top: 110px; }
+    .hero-products { display: none; }
+    .philosophy .grid { grid-template-columns: 1fr; }
+    .phil-mark { display:none; }
+    .products { grid-template-columns: repeat(2, 1fr); }
+    .steps { grid-template-columns: 1fr; }
+    .foot-grid { grid-template-columns: 1fr 1fr; }
+    nav.menu { display: none; }
+    .menu-toggle { display:block; background:none; border:none; font-size:24px; color: var(--gold-deep); cursor:pointer; }
+  }
+  @media (max-width: 520px) {
+    .foot-grid { grid-template-columns: 1fr; }
+    .products { grid-template-columns: 1fr; max-width: 360px; margin-inline:auto; }
+    .hero-actions .btn { flex: 1; justify-content:center; }
+  }
+</style>
+</head>
+<body>
+
+<!-- INTRO / OPENING -->
+<div id="intro" aria-hidden="true">
+  <div class="intro-inner">
+    <div class="intro-logo">NOIR ÉCLAT</div>
+    <div class="intro-line"></div>
+    <div class="intro-sub">Beauty with Strength</div>
+  </div>
+</div>
+
+<!-- NAV -->
+<header class="nav" id="nav">
+  <div class="brand">NOIR ÉCLAT</div>
+  <nav class="menu">
+    <a href="#philosophy">BRAND</a>
+    <a href="#collection">COLLECTION</a>
+    <a href="#ritual">RITUAL</a>
+    <a href="#voice">VOICE</a>
+    <a href="#cta" class="nav-cta">はじめる</a>
+  </nav>
+  <button class="menu-toggle" aria-label="menu">☰</button>
+</header>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="hero-text">
+    <div class="hero-logo">NOIR ÉCLAT</div>
+    <div class="hero-sub-en">Beauty with Strength</div>
+
+    <h1 class="hero-head">黒をまとう、<br /><span class="accent">強さを纏う。</span></h1>
+
+    <p class="hero-tag">媚びない美しさが、<br />いちばん強い。</p>
+    <div class="hero-rule"></div>
+    <p class="hero-body">
+      まとうことは、強さを宿すこと。凛とした芯と、ゆるがない艶。<br />
+      媚びず、揺るがず、自分のために美しくある人へ。NOIR ÉCLAT。
+    </p>
+    <div class="hero-actions">
+      <a href="#collection" class="btn btn-primary">コレクションを見る</a>
+      <a href="#philosophy" class="btn btn-ghost">NOIR を知る</a>
+    </div>
+  </div>
+
+  <div class="hero-visual">
+    <img class="hero-model" src="model_noir.png" alt="NOIR ÉCLAT — モデル" />
+    <div class="hero-products">
+      <div class="hero-thumb"><img src="lotion_noir.png" alt="Hydrating Lotion" /></div>
+      <div class="hero-thumb"><img src="serum_noir.png" alt="Renewal Serum" /></div>
+      <div class="hero-thumb"><img src="lipstick_noir.png" alt="Matte Lip" /></div>
+      <div class="hero-thumb"><img src="compact_noir.png" alt="Pressed Powder" /></div>
+    </div>
+  </div>
+
+  <div class="hero-scroll">Scroll<span class="line"></span></div>
+</section>
+
+<!-- PHILOSOPHY -->
+<section class="philosophy" id="philosophy">
+  <div class="wrap grid">
+    <div class="phil-copy reveal">
+      <div class="eyebrow">Our Philosophy</div>
+      <p class="phil-quote" style="margin-top:24px;">
+        美しさは、<span class="accent">与えられるもの</span>ではなく、<br />
+        自分で<span class="accent">選び取るもの</span>。
+      </p>
+      <p>
+        トレンドでも、誰かの基準でもない。自分がいちばん強くいられる美しさを、自分で選ぶ。
+        NOIR ÉCLAT は、その意志をかたちにするためにある。
+      </p>
+      <p>
+        飾るためではなく、自分を貫くために。
+        毎日のひとつひとつの所作が、揺るがない自信へと変わっていく。
+      </p>
+    </div>
+    <div class="reveal">
+      <div class="phil-mark">N</div>
+    </div>
+  </div>
+</section>
+
+<!-- COLLECTION -->
+<section class="collection" id="collection">
+  <div class="wrap">
+    <div class="head reveal">
+      <div class="eyebrow">The Collection</div>
+      <h2 class="sec-title">強さを纏う、<span class="accent">四つの儀式</span>。</h2>
+    </div>
+    <div class="products">
+      <article class="card reveal">
+        <div class="pic"><img src="lotion_noir.png" alt="Hydrating Lotion" /></div>
+        <div class="name-en">Hydrating Lotion</div>
+        <div class="name-jp">ハイドレーティング ローション</div>
+        <p class="desc">角層の奥まで潤いで満たし、艶めく素肌の土台を築く化粧水。</p>
+        <div class="price">¥6,800</div>
+      </article>
+      <article class="card reveal">
+        <div class="pic"><img src="serum_noir.png" alt="Renewal Serum" /></div>
+        <div class="name-en">Renewal Serum</div>
+        <div class="name-jp">リニューアル セラム</div>
+        <p class="desc">肌の芯からハリと冴えを引き出す、高濃度美容液。</p>
+        <div class="price">¥12,000</div>
+      </article>
+      <article class="card reveal">
+        <div class="pic"><img src="lipstick_noir.png" alt="Matte Lip" /></div>
+        <div class="name-en">Matte Lip</div>
+        <div class="name-jp">マット リップ</div>
+        <p class="desc">凛とした表情を際立たせる、深みのあるヌーディーカラー。</p>
+        <div class="price">¥4,200</div>
+      </article>
+      <article class="card reveal">
+        <div class="pic"><img src="compact_noir.png" alt="Pressed Powder" /></div>
+        <div class="name-en">Pressed Powder</div>
+        <div class="name-jp">プレスト パウダー</div>
+        <p class="desc">崩れない美しさを一日中。艶を宿す、なめらかな仕上がり。</p>
+        <div class="price">¥5,800</div>
+      </article>
+    </div>
+  </div>
+</section>
+
+<!-- RITUAL -->
+<section class="ritual" id="ritual">
+  <div class="wrap">
+    <div class="head reveal">
+      <div class="eyebrow">Daily Ritual</div>
+      <h2 class="sec-title">重ねるほどに、<span class="accent">強くなる</span>。</h2>
+    </div>
+    <div class="steps">
+      <div class="step reveal">
+        <div class="no">01</div>
+        <h4>整える / Prepare</h4>
+        <p>ローションで肌の土台を整え、一日の始まりに自分と向き合う。</p>
+      </div>
+      <div class="step reveal">
+        <div class="no">02</div>
+        <h4>満たす / Nourish</h4>
+        <p>セラムを満たし、内側から艶とハリを宿していく。</p>
+      </div>
+      <div class="step reveal">
+        <div class="no">03</div>
+        <h4>纏う / Express</h4>
+        <p>メイクとフレグランスで、今日の強さを身に纏う。</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- VOICE -->
+<section class="voice" id="voice">
+  <div class="wrap reveal">
+    <div class="eyebrow" style="margin-bottom:30px;">Voice</div>
+    <blockquote>
+      「鏡の前で、<br />
+      <span class="accent">迷わなくなった</span>。」
+    </blockquote>
+    <cite>— Mika, 34 / NOIR ÉCLAT 愛用歴2年</cite>
+  </div>
+</section>
+
+<!-- CTA -->
+<section class="cta" id="cta">
+  <div class="wrap inner reveal">
+    <div class="eyebrow">Begin Your Ritual</div>
+    <h2>私の美しさを、<br /><span class="accent">私のものに。</span></h2>
+    <p>はじめての方へ。まずは気軽に試せるスターターキットから。
+       自分を貫く美しさへの、最初の一歩を。</p>
+    <div class="hero-actions" style="justify-content:center;">
+      <a href="#" class="btn btn-primary">スターターキットを見る</a>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="wrap">
+    <div class="foot-grid">
+      <div class="foot-brand">
+        <div class="brand">NOIR ÉCLAT</div>
+        <p>自分を貫くすべての人へ。スキンケア、メイク、フレグランスを通して、
+           強さとともにある美しさに寄り添うビューティブランド。</p>
+      </div>
+      <div class="foot-col">
+        <h5>Shop</h5>
+        <a href="#collection">スキンケア</a>
+        <a href="#collection">メイク</a>
+        <a href="#collection">フレグランス</a>
+        <a href="#cta">スターターセット</a>
+      </div>
+      <div class="foot-col">
+        <h5>About</h5>
+        <a href="#philosophy">ブランドフィロソフィー</a>
+        <a href="#ritual">デイリーリチュアル</a>
+        <a href="#voice">お客様の声</a>
+      </div>
+      <div class="foot-col">
+        <h5>Support</h5>
+        <a href="#">カウンセリング予約</a>
+        <a href="#">お問い合わせ</a>
+        <a href="#">配送・返品について</a>
+      </div>
+    </div>
+    <div class="foot-bottom">
+      <span>© 2026 NOIR ÉCLAT. All rights reserved.</span>
+      <span>Instagram　/　X　/　LINE</span>
+    </div>
+  </div>
+</footer>
+
+<div class="tagline-band">私の美しさを、私のものに。</div>
+
+<!-- PRODUCT DETAIL MODAL -->
+<div class="pmodal" id="product-modal" role="dialog" aria-modal="true" aria-hidden="true">
+  <div class="pmodal-backdrop" data-close></div>
+  <div class="pmodal-panel">
+    <button class="pmodal-close" data-close aria-label="閉じる">×</button>
+    <div class="pmodal-figure"><img alt="" /></div>
+    <div class="pmodal-body">
+      <div class="name-en"></div>
+      <div class="name-jp"></div>
+      <div class="rule"></div>
+      <p class="desc"></p>
+      <div class="price"></div>
+      <a href="#cta" class="btn btn-primary" data-close>カートに追加</a>
+    </div>
+  </div>
+</div>
+
+<script>
+  const reduce = matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+  /* ---------- nav background on scroll ---------- */
+  const nav = document.getElementById('nav');
+  addEventListener('scroll', () => {
+    nav.classList.toggle('scrolled', scrollY > 40);
+  });
+
+  /* ---------- reveal on scroll ---------- */
+  const io = new IntersectionObserver((entries) => {
+    entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add('in'); io.unobserve(e.target); } });
+  }, { threshold: 0.16 });
+  document.querySelectorAll('.reveal').forEach((el, i) => {
+    el.style.transitionDelay = (i % 3) * 0.12 + 's';
+    io.observe(el);
+  });
+
+  /* ---------- opening sequence ---------- */
+  const intro = document.getElementById('intro');
+  function startSite() { document.body.classList.add('ready'); }
+  if (reduce || !intro) {
+    if (intro) intro.style.display = 'none';
+    startSite();
+  } else {
+    document.body.classList.add('lock');
+    let done = false;
+    const finish = () => {
+      if (done) return; done = true;
+      intro.style.display = 'none';
+      document.body.classList.remove('lock');
+    };
+    intro.addEventListener('transitionend', (e) => { if (e.propertyName === 'transform') finish(); });
+    setTimeout(() => { intro.classList.add('exit'); startSite(); }, 2200);
+    setTimeout(() => { startSite(); finish(); }, 4200); // safety net
+  }
+
+  /* ---------- eased anchor scrolling ---------- */
+  const easeInOutCubic = t => t < .5 ? 4*t*t*t : 1 - Math.pow(-2*t + 2, 3) / 2;
+  function smoothTo(targetY, dur = 1000) {
+    const startY = scrollY, dist = targetY - startY, t0 = performance.now();
+    (function step(now) {
+      const p = Math.min(1, (now - t0) / dur);
+      scrollTo(0, startY + dist * easeInOutCubic(p));
+      if (p < 1) requestAnimationFrame(step);
+    })(t0);
+  }
+  document.querySelectorAll('a[href^="#"]').forEach(a => {
+    a.addEventListener('click', (e) => {
+      const id = a.getAttribute('href');
+      if (id.length < 2) return;
+      const el = document.querySelector(id);
+      if (!el) return;
+      e.preventDefault();
+      const top = el.getBoundingClientRect().top + scrollY - 64;
+      if (reduce) scrollTo(0, top); else smoothTo(top, 1000);
+    });
+  });
+
+  /* ---------- product detail modal (View Transitions morph) ---------- */
+  const longCopy = {
+    'Hydrating Lotion': 'とろみのあるテクスチャーが角層のすみずみまで浸透し、内側から満ちるようなうるおいを与えます。ベタつかず、次のお手入れを邪魔しない設計。アルコールフリー・無香料。',
+    'Renewal Serum': '複数のうるおい成分とハリ感サポート成分を高濃度で配合。なめらかに溶け込み、翌朝のキメと透明感をめざす、夜のご褒美美容液。',
+    'Matte Lip': 'ひと塗りで凛とした表情を描く、深みのあるヌーディーブラウン。マットでありながら乾きにくい、軽やかなつけ心地。',
+    'Pressed Powder': '微細なパールが肌に自然な艶をのせ、毛穴や凹凸をやわらかくぼかします。ひと塗りで一日中、上品なツヤ肌をキープ。'
+  };
+  const modal = document.getElementById('product-modal');
+  const mFig = modal.querySelector('.pmodal-figure img');
+  const mEn = modal.querySelector('.name-en');
+  const mJp = modal.querySelector('.name-jp');
+  const mDesc = modal.querySelector('.desc');
+  const mPrice = modal.querySelector('.price');
+  let activeCardImg = null;
+  const VT = 'startViewTransition' in document && !reduce;
+
+  function fill(card) {
+    const img = card.querySelector('.pic img');
+    const en = card.querySelector('.name-en').textContent.trim();
+    mFig.src = img.src; mFig.alt = img.alt;
+    mEn.textContent = en;
+    mJp.textContent = card.querySelector('.name-jp').textContent;
+    mDesc.textContent = longCopy[en] || card.querySelector('.desc').textContent;
+    mPrice.textContent = card.querySelector('.price').textContent;
+  }
+  function showModal() {
+    modal.classList.add('open');
+    modal.setAttribute('aria-hidden', 'false');
+    document.body.classList.add('lock');
+    mFig.style.viewTransitionName = 'product-hero';
+  }
+  function hideModal() {
+    modal.classList.remove('open');
+    modal.setAttribute('aria-hidden', 'true');
+    document.body.classList.remove('lock');
+  }
+  function openModal(card) {
+    fill(card);
+    activeCardImg = card.querySelector('.pic img');
+    if (VT) {
+      activeCardImg.style.viewTransitionName = 'product-hero';
+      const t = document.startViewTransition(() => {
+        activeCardImg.style.viewTransitionName = '';
+        showModal();
+      });
+      t.finished.finally(() => { mFig.style.viewTransitionName = ''; });
+    } else {
+      showModal();
+      mFig.style.viewTransitionName = '';
+    }
+  }
+  function closeModal() {
+    if (VT && activeCardImg) {
+      mFig.style.viewTransitionName = 'product-hero';
+      const card = activeCardImg;
+      const t = document.startViewTransition(() => {
+        mFig.style.viewTransitionName = '';
+        hideModal();
+        card.style.viewTransitionName = 'product-hero';
+      });
+      t.finished.finally(() => { card.style.viewTransitionName = ''; });
+    } else {
+      hideModal();
+    }
+  }
+  document.querySelectorAll('.card').forEach(card => {
+    card.insertAdjacentHTML('beforeend', '<span class="more">View Detail</span>');
+    card.addEventListener('click', () => openModal(card));
+  });
+  modal.querySelectorAll('[data-close]').forEach(el => el.addEventListener('click', closeModal));
+  addEventListener('keydown', (e) => { if (e.key === 'Escape' && modal.classList.contains('open')) closeModal(); });
+</script>
+</body>
+</html>
