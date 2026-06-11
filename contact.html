@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>CONTACT — NOIR ÉCLAT</title>
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,400&family=Noto+Serif+JP:wght@200;300;400;500;600;700&display=swap" rel="stylesheet" />
+<link rel="stylesheet" href="style.css" />
+</head>
+<body>
+
+<div data-include="partials/nav.html"></div>
+
+<main class="page">
+  <section class="subhero">
+    <div class="wrap">
+      <span class="eyebrow">Contact</span>
+      <h1>あなたの美しさを、<span class="accent">ともに</span>。</h1>
+      <p class="lead">ご相談、カウンセリングのご予約はこちらから。あなたに合った美しさの提案を、丁寧にお届けします。</p>
+    </div>
+  </section>
+
+  <section style="padding-top:0;">
+    <div class="wrap">
+      <form class="cform" id="contact-form" novalidate>
+        <div class="field">
+          <label for="name">お名前</label>
+          <input id="name" name="name" type="text" required placeholder="山田 花子" />
+        </div>
+        <div class="field">
+          <label for="email">メールアドレス</label>
+          <input id="email" name="email" type="email" required placeholder="you@example.com" />
+        </div>
+        <div class="field">
+          <label for="type">お問い合わせ種別</label>
+          <select id="type" name="type">
+            <option>お問い合わせ</option>
+            <option>カウンセリング予約</option>
+          </select>
+        </div>
+        <div class="field">
+          <label for="body">本文</label>
+          <textarea id="body" name="body" required placeholder="ご相談内容をご記入ください。"></textarea>
+        </div>
+        <div class="submit-row">
+          <button type="submit" class="btn btn-primary">送信する</button>
+        </div>
+        <p class="form-note">※ 本サイトはコンセプト作品です。フォームは実際には送信されません。</p>
+      </form>
+      <div class="form-success" id="form-success">
+        お問い合わせを受け付けました。ありがとうございます。<br />
+        （※ デモのため、実際には送信されていません）
+      </div>
+    </div>
+  </section>
+</main>
+
+<div data-include="partials/footer.html"></div>
+
+<script src="include.js"></script>
+<script>
+  document.addEventListener('DOMContentLoaded', () => {
+    const f = document.getElementById('contact-form');
+    f.addEventListener('submit', (e) => {
+      e.preventDefault();
+      if (!f.checkValidity()) { f.reportValidity(); return; }
+      f.classList.add('sent');
+      document.getElementById('form-success').classList.add('show');
+      scrollTo({ top: f.getBoundingClientRect().top + scrollY - 140, behavior: 'smooth' });
+    });
+  });
+</script>
+</body>
+</html>
