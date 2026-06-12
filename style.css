@@ -510,6 +510,7 @@
     }
     nav.menu.open { opacity: 1; visibility: visible; transform: none; }
     nav.menu a { font-size: 17px; letter-spacing: .2em; }
+    nav.menu .soon, nav.menu .nav-cta { display: none; }
     body.menu-open { overflow: hidden; }
     /* backdrop-filter on an ancestor creates a containing block that would trap
        the fixed overlay inside the header — disable it on mobile */
