@@ -522,6 +522,14 @@
     .hero-actions .btn { flex: 1; justify-content:center; }
   }
 
+  /* ============ RESPONSIVE LINE BREAKS ============ */
+  /* <br class="br-sp"> = break on mobile only ; <br class="br-pc"> = break on desktop only */
+  br.br-sp { display: none; }
+  @media (max-width: 600px) {
+    br.br-sp { display: inline; }
+    br.br-pc { display: none; }
+  }
+
   /* ============ PLACEHOLDER (concept site) ============ */
   a.soon { opacity: .55; cursor: default; }
   a.soon:hover::after { width: 0 !important; }
