@@ -22,6 +22,25 @@ async function includePartials() {
       if (href.length > 1) a.setAttribute('href', 'index.html' + href);
     });
   }
+  // mobile hamburger toggle
+  const toggle = document.querySelector('.menu-toggle');
+  const menu = document.querySelector('nav.menu');
+  if (toggle && menu) {
+    toggle.addEventListener('click', () => {
+      const open = menu.classList.toggle('open');
+      document.body.classList.toggle('menu-open', open);
+      toggle.textContent = open ? '✕' : '☰';
+      toggle.setAttribute('aria-expanded', String(open));
+    });
+    menu.querySelectorAll('a').forEach((a) =>
+      a.addEventListener('click', () => {
+        menu.classList.remove('open');
+        document.body.classList.remove('menu-open');
+        toggle.textContent = '☰';
+      })
+    );
+  }
+
   document.dispatchEvent(new CustomEvent('partials:loaded'));
 }
 document.addEventListener('DOMContentLoaded', includePartials);
